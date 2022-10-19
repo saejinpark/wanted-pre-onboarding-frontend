@@ -89,21 +89,26 @@ function SignIn(props) {
   const signInHandler = (e) => {
     e.preventDefault();
     const body = { email, password };
-    axios
-      .post(`${apiUrl}/auth/signin`, body, {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-      })
-      .then((res) => {
-        const { statusText, data } = res;
-        const { access_token } = data;
-        if (statusText === "OK") {
-          localStorage.setItem("access_token", access_token);
-          setAccessToken(access_token);
-          navigate("/");
-        }
-      });
+    try {
+      axios
+        .post(`${apiUrl}/auth/signin`, body, {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        })
+        .then((res) => {
+          const { statusText, data } = res;
+          const { access_token } = data;
+          if (statusText === "OK") {
+            localStorage.setItem("access_token", access_token);
+            setAccessToken(access_token);
+            navigate("/");
+          }
+        })
+        .catch((e) => {
+          alert("계정이 존재하지 않거나 비밀번호가 틀립니다.");
+        });
+    } catch (error) {}
   };
 
   return (

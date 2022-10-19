@@ -103,6 +103,9 @@ function SignUp() {
         if (statusText === "Created") {
           navigate("/signin");
         }
+      })
+      .catch((e) => {
+        alert("이미 존재하는 계정 입니다.");
       });
   };
 
